@@ -38,7 +38,7 @@ export async function extract(payload) {
       body: JSON.stringify(payload),
     })
   } catch {
-    throw new ApiError("Can't reach the backend. Is it running on port 8000?")
+    throw new ApiError(`Can't reach the backend at ${API_BASE}. It may be waking up — try again in a moment.`)
   }
 
   const data = await res.json().catch(() => null)
