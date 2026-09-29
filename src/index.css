@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans Ethiopic", "Noto Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #1c1917;
+  --color-cream: #faf6ef;
+  --color-sand: #f1e9dc;
+  --color-clay: #ea580c;
+  --color-clay-dark: #c2410c;
+
+  --animate-fade-up: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-word: word 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes word {
+    from { opacity: 0; transform: translateY(0.4em); filter: blur(4px); }
+    to { opacity: 1; transform: translateY(0); filter: blur(0); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  @apply bg-cream font-sans text-ink antialiased;
+  /* Safety net against sideways scrolling on narrow phones; `clip` keeps the sticky header working. */
+  overflow-x: clip;
+}
+
+/* Stop the page behind an open modal from scrolling (notably on iOS). */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* iOS Safari zooms the page when focusing a field under 16px. Unlayered, so it beats `text-sm`. */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Subtle woven pattern used behind the hero. */
+.bg-weave {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgb(28 25 23 / 0.08) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
