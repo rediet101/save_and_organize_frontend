@@ -53,16 +53,20 @@ export default function DateTimePicker({ value, onChange }) {
     setView({ year: y, month: m - 1 })
   }, [date])
 
-  // Keep the chosen time (or the default) centered in the time rail.
+  // Keep the chosen time (or the default) centered in the time rail. Deferred a frame because
+  // this mounts before the parent calls showModal(), when the rail has no layout yet.
   useEffect(() => {
-    const rail = railRef.current
-    const chip = rail?.querySelector(`[data-time="${time || DEFAULT_TIME}"]`)
-    if (!chip) return
-    rail.scrollTo({
-      left: chip.offsetLeft - (rail.clientWidth - chip.offsetWidth) / 2,
-      behavior: scrolledOnce.current ? 'smooth' : 'instant',
+    const frame = requestAnimationFrame(() => {
+      const rail = railRef.current
+      const chip = rail?.querySelector(`[data-time="${time || DEFAULT_TIME}"]`)
+      if (!chip || !rail.clientWidth) return
+      rail.scrollTo({
+        left: chip.offsetLeft - (rail.clientWidth - chip.offsetWidth) / 2,
+        behavior: scrolledOnce.current ? 'smooth' : 'instant',
+      })
+      scrolledOnce.current = true
     })
-    scrolledOnce.current = true
+    return () => cancelAnimationFrame(frame)
   }, [time])
 
   const slots = time && !SLOTS.includes(time) ? [...SLOTS, time].sort() : SLOTS

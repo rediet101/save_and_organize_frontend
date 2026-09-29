@@ -134,10 +134,10 @@ export default function CalendarDialog({ item, open, onClose, onConfirm }) {
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-sand px-4 py-3 text-sm sm:py-2.5 font-semibold text-ink ring-1 ring-stone-200 hover:bg-stone-200/60 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <Download className="size-4" />
-            Apple / Outlook (.ics)
+            Apple / Outlook
           </button>
         </div>
-        <p className="mt-3 text-center text-xs text-stone-400">The .ics file includes a reminder 1 hour before.</p>
+        <p className="mt-3 text-center text-xs text-stone-400">Apple / Outlook downloads an .ics file with a reminder 1 hour before.</p>
       </div>
     </dialog>
   )
